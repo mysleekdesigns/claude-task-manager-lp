@@ -1,0 +1,90 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": \"Custom agents available: code-reviewer, test-runner, security-auditor, documentation-writer, db-reader, researcher, refactor-assistant. Use /agents to see all or invoke directly.\"}}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"SubagentStop\", \"additionalContext\": \"Subagent completed. Verify the output meets the original request requirements.\"}}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); FILE=$(echo \"$INPUT\" | jq -r '.tool_input.file_path // empty'); if echo \"$FILE\" | grep -E '\\.(env|pem|key)$' > /dev/null; then echo '{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"Cannot modify sensitive credential files\"}}' && exit 0; fi; exit 0",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); CMD=$(echo \"$INPUT\" | jq -r '.tool_input.command // empty'); if echo \"$CMD\" | grep -iE '^(rm\\s+-rf\\s+/|sudo\\s+rm|mkfs|dd\\s+if=|:\\(\\)\\{|fork\\s+bomb)' > /dev/null; then echo '{\"continue\": false, \"reason\": \"Blocked: Potentially destructive system command\"}' >&2 && exit 2; fi; exit 0",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"PostToolUse\", \"additionalContext\": \"Subagent task completed. Review the results for completeness and accuracy.\"}}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\": \"Session completed. Remember to commit any important changes.\"}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Task(code-reviewer)",
+      "Task(test-runner)",
+      "Task(security-auditor)",
+      "Task(documentation-writer)",
+      "Task(db-reader)",
+      "Task(researcher)",
+      "Task(refactor-assistant)",
+      "Task(Explore)",
+      "Task(Plan)"
+    ]
+  }
+}
