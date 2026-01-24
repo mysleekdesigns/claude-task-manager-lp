@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Base color palette from PRD */
+:root {
+  /* Background colors */
+  --background: #0a0a0f;
+  --background-secondary: #111118;
+  --background-tertiary: #18181f;
+
+  /* Foreground colors */
+  --foreground: #ededed;
+  --foreground-muted: #a1a1aa;
+
+  /* Primary accent - Cyan */
+  --primary: #06b6d4;
+  --primary-foreground: #0a0a0f;
+  --primary-glow: #22d3ee;
+
+  /* Secondary accent */
+  --secondary: #1e1e2a;
+  --secondary-foreground: #ededed;
+
+  /* Muted colors */
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+
+  /* Card colors */
+  --card: rgba(24, 24, 31, 0.8);
+  --card-foreground: #ededed;
+
+  /* Border colors */
+  --border: #27272a;
+  --border-glow: rgba(6, 182, 212, 0.3);
+
+  /* Input colors */
+  --input: #27272a;
+  --ring: #06b6d4;
+
+  /* Status colors */
+  --destructive: #ef4444;
+  --destructive-foreground: #ededed;
+
+  /* Radius */
+  --radius: 0.75rem;
+}
+
+/* Tailwind v4 @theme directive for custom design tokens */
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-border: var(--border);
+  --color-border-glow: var(--border-glow);
+
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Border radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* Base body styles */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Glassmorphism utility class */
+.glass {
+  background: rgba(24, 24, 31, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glow effect utility class */
+.glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3),
+              0 0 40px rgba(6, 182, 212, 0.1);
+}
+
+/* Text glow utility class */
+.text-glow {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5),
+               0 0 20px rgba(6, 182, 212, 0.3);
+}
