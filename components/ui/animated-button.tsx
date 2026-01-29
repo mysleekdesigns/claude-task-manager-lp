@@ -1,16 +1,18 @@
 "use client";
 
-import { forwardRef, type ButtonHTMLAttributes } from "react";
-import { motion } from "motion/react";
+import { forwardRef, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "outline";
 type ButtonSize = "sm" | "md" | "lg";
 
-interface AnimatedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface AnimatedButtonProps
+  extends Omit<HTMLMotionProps<"button">, "size" | "children"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   glow?: boolean;
+  children?: ReactNode;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -56,8 +58,8 @@ const AnimatedButton = forwardRef<HTMLButtonElement, AnimatedButtonProps>(
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        disabled={disabled}
         {...props}
+        disabled={disabled}
       >
         {/* Ripple/glow effect overlay */}
         <motion.span

@@ -1,18 +1,19 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, type ReactNode } from "react";
 import { motion, type MotionProps, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type AnimationVariant = "fade" | "slideUp" | "slideLeft" | "slideRight" | "scale";
 
-interface SectionWrapperProps extends HTMLAttributes<HTMLElement> {
+interface SectionWrapperProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
   as?: "section" | "div" | "article";
   animation?: AnimationVariant;
   delay?: number;
   fullWidth?: boolean;
   container?: boolean;
   padding?: "none" | "sm" | "md" | "lg" | "xl";
+  children?: ReactNode;
 }
 
 const paddingStyles = {
@@ -57,31 +58,23 @@ const motionComponents = {
   article: MotionArticle,
 } as const;
 
-const SectionWrapper = forwardRef<
-  HTMLElement,
-  SectionWrapperProps & MotionProps
->(
-  (
-    {
-      className,
-      as = "section",
-      animation = "slideUp",
-      delay = 0,
-      fullWidth = false,
-      container = true,
-      padding = "lg",
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const shouldReduceMotion = useReducedMotion();
-    const MotionComponent = motionComponents[as];
-    const variant = animationVariants[animation];
+function SectionWrapper({
+  className,
+  as = "section",
+  animation = "slideUp",
+  delay = 0,
+  fullWidth = false,
+  container = true,
+  padding = "lg",
+  children,
+  ...props
+}: SectionWrapperProps & MotionProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const MotionComponent = motionComponents[as];
+  const variant = animationVariants[animation];
 
-    return (
-      <MotionComponent
-        ref={ref}
+  return (
+    <MotionComponent
         className={cn(
           "relative w-full",
           paddingStyles[padding],
@@ -108,12 +101,9 @@ const SectionWrapper = forwardRef<
           </div>
         ) : (
           children
-        )}
-      </MotionComponent>
-    );
-  }
-);
-
-SectionWrapper.displayName = "SectionWrapper";
+      )}
+    </MotionComponent>
+  );
+}
 
 export { SectionWrapper, type SectionWrapperProps };

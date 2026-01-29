@@ -1,16 +1,17 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, type ReactNode } from "react";
 import { motion, type MotionProps } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type GradientVariant = "primary" | "secondary" | "rainbow";
 
-interface GradientTextProps extends HTMLAttributes<HTMLSpanElement> {
+interface GradientTextProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
   variant?: GradientVariant;
   animate?: boolean;
   glow?: boolean;
   as?: "span" | "h1" | "h2" | "h3" | "h4" | "p";
+  children?: ReactNode;
 }
 
 const gradientStyles: Record<GradientVariant, string> = {
@@ -36,24 +37,19 @@ const motionComponents = {
   p: MotionP,
 } as const;
 
-const GradientText = forwardRef<HTMLSpanElement, GradientTextProps & MotionProps>(
-  (
-    {
-      className,
-      variant = "primary",
-      animate = false,
-      glow = false,
-      as = "span",
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const MotionComponent = motionComponents[as];
+function GradientText({
+  className,
+  variant = "primary",
+  animate = false,
+  glow = false,
+  as = "span",
+  children,
+  ...props
+}: GradientTextProps & MotionProps) {
+  const MotionComponent = motionComponents[as];
 
-    return (
-      <MotionComponent
-        ref={ref}
+  return (
+    <MotionComponent
         className={cn(
           "bg-gradient-to-r bg-clip-text text-transparent",
           gradientStyles[variant],
@@ -71,13 +67,10 @@ const GradientText = forwardRef<HTMLSpanElement, GradientTextProps & MotionProps
             : undefined
         }
         {...props}
-      >
-        {children}
-      </MotionComponent>
-    );
-  }
-);
-
-GradientText.displayName = "GradientText";
+    >
+      {children}
+    </MotionComponent>
+  );
+}
 
 export { GradientText, type GradientTextProps };
