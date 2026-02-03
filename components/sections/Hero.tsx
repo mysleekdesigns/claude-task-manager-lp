@@ -323,7 +323,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden pt-20"
+      className="relative min-h-screen overflow-hidden pt-20 lg:min-h-0 lg:pb-16"
     >
       {/* Background effects */}
       <AnimatedMeshBackground />
