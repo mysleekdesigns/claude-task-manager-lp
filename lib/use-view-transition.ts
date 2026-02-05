@@ -19,8 +19,11 @@ function useViewTransition() {
         typeof document !== "undefined" &&
         "startViewTransition" in document
       ) {
-        document.startViewTransition(() => {
+        const transition = document.startViewTransition(() => {
           startTransition(callback);
+        });
+        transition.finished.catch(() => {
+          // Transition was interrupted — no action needed
         });
       } else {
         // Fallback: just use React transition

@@ -13,3 +13,4 @@ export {
   type SkeletonProps,
 } from "./skeleton";
 export { StateTransition, type StateTransitionProps } from "./state-transition";
+export { Logo } from "./logo";

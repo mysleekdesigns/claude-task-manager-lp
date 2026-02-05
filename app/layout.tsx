@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { PageLoader } from "@/components/ui/page-loader";
+import { BASE_URL } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Claude Task Manager" }],
   creator: "Claude Task Manager",
   publisher: "Claude Task Manager",
-  metadataBase: new URL("https://claudetaskmanager.com"),
+  metadataBase: new URL(BASE_URL),
   alternates: {
     canonical: "/",
   },
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     title: "Claude Task Manager - AI-Powered Task Management",
     description:
       "Manage tasks intelligently with Claude AI assistance. Organize, prioritize, and complete your work with the power of AI.",
-    url: "https://claudetaskmanager.com",
+    url: BASE_URL,
     siteName: "Claude Task Manager",
     type: "website",
     locale: "en_US",
@@ -91,7 +92,7 @@ export default function RootLayout({
               operatingSystem: "Web",
               description:
                 "Manage tasks intelligently with Claude AI assistance. Organize, prioritize, and complete your work with the power of AI.",
-              url: "https://claudetaskmanager.com",
+              url: BASE_URL,
               offers: [
                 {
                   "@type": "Offer",
@@ -188,9 +189,15 @@ export default function RootLayout({
             }),
           }}
         />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to main content
+        </a>
         <PageLoader />
         <Header />
-        <main className="relative pt-16 lg:pt-0">{children}</main>
+        <main id="main-content" className="relative pt-16 lg:pt-0">{children}</main>
         <Footer />
       </body>
     </html>
