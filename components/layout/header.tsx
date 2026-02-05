@@ -31,8 +31,8 @@ export function Header() {
   return (
     <motion.header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "glass py-3" : "bg-transparent py-5"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 lg:relative",
+        isScrolled ? "glass py-3 lg:bg-transparent lg:backdrop-blur-none lg:border-none lg:shadow-none lg:py-5" : "bg-transparent py-5"
       )}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}

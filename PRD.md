@@ -154,10 +154,10 @@ Define in `app/globals.css` using Tailwind v4 syntax:
 
 ### 3.3 How It Works Section
 
-- [ ] Step-by-step process visualization
-- [ ] Numbered steps with connecting lines/animations
-- [ ] Icons or mini illustrations for each step
-- [ ] Progressive reveal animation
+- [x] Step-by-step process visualization
+- [x] Numbered steps with connecting lines/animations
+- [x] Icons or mini illustrations for each step
+- [x] Progressive reveal animation
 
 **Steps:**
 1. Create your workspace
